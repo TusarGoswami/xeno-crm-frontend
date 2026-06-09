@@ -39,6 +39,7 @@ export default function Home() {
   const [currentDraft, setCurrentDraft] = useState('');
   const [currentData, setCurrentData] = useState(null); // holds parsed AI data + segment results
   const chatEndRef = useRef(null);
+  const msgIdRef = useRef(0); // unique message ID counter
   const navigate = useNavigate();
 
   // Auto-scroll to bottom when new messages appear
@@ -48,7 +49,8 @@ export default function Home() {
 
   /** Add a message to the chat feed */
   const addMessage = (type, data = {}) => {
-    setMessages((prev) => [...prev, { id: Date.now(), type, ...data }]);
+    msgIdRef.current += 1;
+    setMessages((prev) => [...prev, { id: `msg-${msgIdRef.current}`, type, ...data }]);
   };
 
   /** Main flow — triggered when user submits a prompt */
