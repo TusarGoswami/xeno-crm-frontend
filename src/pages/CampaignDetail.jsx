@@ -71,6 +71,7 @@ export default function CampaignDetail() {
       opened: <IoEye className="w-3.5 h-3.5 text-blue-400 inline-block" />,
       read: <IoEye className="w-3.5 h-3.5 text-cyan-400 inline-block" />,
       clicked: <IoHandRight className="w-3.5 h-3.5 text-purple-400 inline-block" />,
+      converted: <IoCheckmarkCircle className="w-3.5 h-3.5 text-emerald-600 inline-block animate-pulse" />,
     };
     return map[status] || map.sent;
   };
@@ -104,6 +105,7 @@ export default function CampaignDetail() {
     { label: 'Delivered', count: stats.delivered || 0, color: 'from-emerald-500 to-emerald-400', icon: IoCheckmarkCircle },
     { label: 'Opened', count: stats.opened || 0, color: 'from-blue-500 to-blue-400', icon: IoEye },
     { label: 'Clicked', count: stats.clicked || 0, color: 'from-brand-600 to-brand-400', icon: IoHandRight },
+    { label: 'Converted', count: stats.converted || 0, color: 'from-[#FF6B6B] to-[#FFA69E]', icon: IoCheckmarkCircle },
   ];
 
   return (
@@ -248,6 +250,7 @@ export default function CampaignDetail() {
                             msg.status === 'failed' ? 'text-red-500' :
                             msg.status === 'opened' ? 'text-blue-600' :
                             msg.status === 'clicked' ? 'text-brand-500' :
+                            msg.status === 'converted' ? 'text-emerald-600 font-extrabold' :
                             'text-slate-500'
                           }>
                             {msg.status}

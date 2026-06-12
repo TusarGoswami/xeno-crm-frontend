@@ -20,7 +20,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 export default function Dashboard() {
   const [customerStats, setCustomerStats] = useState(null);
   const [campaigns, setCampaigns] = useState([]);
-  const [campaignStats, setCampaignStats] = useState({ total: 0, totalSent: 0, totalDelivered: 0, totalOpened: 0, totalClicked: 0 });
+  const [campaignStats, setCampaignStats] = useState({ total: 0, totalSent: 0, totalDelivered: 0, totalOpened: 0, totalClicked: 0, totalConverted: 0, totalRevenue: 0 });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -47,7 +47,9 @@ export default function Dashboard() {
         totalDelivered: acc.totalDelivered + (c.stats?.delivered || 0),
         totalOpened: acc.totalOpened + (c.stats?.opened || 0),
         totalClicked: acc.totalClicked + (c.stats?.clicked || 0),
-      }), { total: 0, totalSent: 0, totalDelivered: 0, totalOpened: 0, totalClicked: 0 });
+        totalConverted: acc.totalConverted + (c.stats?.converted || 0),
+        totalRevenue: acc.totalRevenue + (c.stats?.revenue || 0),
+      }), { total: 0, totalSent: 0, totalDelivered: 0, totalOpened: 0, totalClicked: 0, totalConverted: 0, totalRevenue: 0 });
       setCampaignStats(aggStats);
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
@@ -62,6 +64,8 @@ export default function Dashboard() {
     ? ((campaignStats.totalOpened / campaignStats.totalDelivered) * 100).toFixed(1) : 0;
   const clickRate = campaignStats.totalOpened > 0
     ? ((campaignStats.totalClicked / campaignStats.totalOpened) * 100).toFixed(1) : 0;
+  const conversionRate = campaignStats.totalSent > 0
+    ? ((campaignStats.totalConverted / campaignStats.totalSent) * 100).toFixed(1) : 0;
 
   if (loading) {
     return (
@@ -96,17 +100,17 @@ export default function Dashboard() {
       borderColor: 'border-slate-100 hover:border-[#FF6B6B]/20',
     },
     {
-      label: 'Total Revenue',
-      value: `₹${(customerStats?.totalRevenue || 0).toLocaleString()}`,
+      label: 'Campaign Revenue (ROI)',
+      value: `₹${(campaignStats.totalRevenue || 0).toLocaleString('en-IN')}`,
       icon: IoWallet,
-      color: 'from-brand-500/10 to-brand-500/5',
-      iconColor: 'text-brand-500',
-      borderColor: 'border-slate-100 hover:border-brand-500/20',
+      color: 'from-emerald-500/10 to-emerald-500/5',
+      iconColor: 'text-emerald-500',
+      borderColor: 'border-slate-100 hover:border-emerald-500/20',
     },
     {
-      label: 'Messages Sent',
-      value: campaignStats.totalSent,
-      icon: IoChatbubbles,
+      label: 'Total Customer Value',
+      value: `₹${(customerStats?.totalRevenue || 0).toLocaleString('en-IN')}`,
+      icon: IoWallet,
       color: 'from-[#FF6B6B]/10 to-[#FF6B6B]/5',
       iconColor: 'text-[#FF6B6B]',
       borderColor: 'border-slate-100 hover:border-[#FF6B6B]/20',
@@ -165,6 +169,7 @@ export default function Dashboard() {
               { label: 'Delivery Rate', value: `${deliveryRate}%`, pct: deliveryRate, color: 'from-[#0F4C5C] to-[#1B5E73]' },
               { label: 'Open Rate', value: `${openRate}%`, pct: openRate, color: 'from-[#1B5E73] to-[#FF6B6B]' },
               { label: 'Click Rate', value: `${clickRate}%`, pct: clickRate, color: 'from-[#FF6B6B] to-[#FFA69E]' },
+              { label: 'Conversion Rate', value: `${conversionRate}%`, pct: conversionRate, color: 'from-[#FF6B6B] to-amber-400' },
             ].map((rate) => (
               <div key={rate.label}>
                 <div className="flex items-center justify-between mb-1.5">

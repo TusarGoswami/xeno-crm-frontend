@@ -144,7 +144,7 @@ export default function Campaigns() {
                 {/* Campaign info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-sm font-semibold text-white truncate">{campaign.name}</h3>
+                    <h3 className="text-sm font-bold text-slate-800 truncate">{campaign.name}</h3>
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${chConfig.color}`}>
                       {chConfig.label}
                     </span>
@@ -169,15 +169,16 @@ export default function Campaigns() {
                 </div>
 
                 {/* Quick stats */}
-                <div className="flex-shrink-0 hidden sm:flex items-center gap-4 mr-2">
+                <div className="flex-shrink-0 hidden sm:flex items-center gap-5 mr-2">
                   {[
-                    { label: 'Delivered', val: stats.delivered, color: 'text-emerald-400' },
-                    { label: 'Opened', val: stats.opened, color: 'text-blue-400' },
-                    { label: 'Clicked', val: stats.clicked, color: 'text-purple-400' },
+                    { label: 'Delivered', val: stats.delivered, color: 'text-emerald-600' },
+                    { label: 'Opened', val: stats.opened, color: 'text-blue-600' },
+                    { label: 'Clicked', val: stats.clicked, color: 'text-purple-600' },
+                    { label: 'Converted', val: stats.converted, color: 'text-[#FF6B6B]' },
                   ].map((s) => (
-                    <div key={s.label} className="text-center">
-                      <p className={`text-sm font-bold ${s.color}`}>{s.val || 0}</p>
-                      <p className="text-xs text-gray-600">{s.label}</p>
+                    <div key={s.label} className="text-center min-w-[50px]">
+                      <p className={`text-sm font-extrabold ${s.color}`}>{s.val || 0}</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
                     </div>
                   ))}
                 </div>

@@ -52,19 +52,19 @@ export function ToastProvider({ children }) {
 
 const typeConfig = {
   success: {
-    icon: <IoCheckmarkCircle className="w-5 h-5 text-emerald-400" />,
-    border: 'border-emerald-500/30',
+    icon: <IoCheckmarkCircle className="w-5 h-5 text-emerald-600" />,
+    border: 'border-emerald-500/20',
     bg: 'bg-emerald-500/10',
   },
   error: {
-    icon: <IoCloseCircle className="w-5 h-5 text-red-400" />,
-    border: 'border-red-500/30',
+    icon: <IoCloseCircle className="w-5 h-5 text-red-600" />,
+    border: 'border-red-500/20',
     bg: 'bg-red-500/10',
   },
   info: {
-    icon: <IoInformationCircle className="w-5 h-5 text-brand-400" />,
-    border: 'border-brand-500/30',
-    bg: 'bg-brand-500/10',
+    icon: <IoInformationCircle className="w-5 h-5 text-[#0F4C5C]" />,
+    border: 'border-[#0F4C5C]/20',
+    bg: 'bg-[#0F4C5C]/10',
   },
 };
 
@@ -74,17 +74,17 @@ function ToastItem({ toast, onClose }) {
   return (
     <div
       className={`pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl
-                  glass border ${config.border} shadow-xl shadow-black/20
+                  bg-white border ${config.border} shadow-lg shadow-slate-200/50
                   animate-toast-in max-w-sm`}
       role="alert"
     >
       <div className={`flex-shrink-0 w-8 h-8 rounded-lg ${config.bg} flex items-center justify-center`}>
         {config.icon}
       </div>
-      <p className="text-sm text-gray-200 flex-1">{toast.message}</p>
+      <p className="text-sm text-slate-800 font-semibold flex-1">{toast.message}</p>
       <button
         onClick={onClose}
-        className="text-gray-500 hover:text-gray-300 transition-colors flex-shrink-0 ml-2"
+        className="text-slate-400 hover:text-slate-600 font-bold transition-colors flex-shrink-0 ml-2"
       >
         ×
       </button>
