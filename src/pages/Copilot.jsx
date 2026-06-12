@@ -355,11 +355,30 @@ export default function Copilot() {
           {/* Welcome message when chat is empty */}
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-fade-in">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF6B6B] to-[#FFA69E] 
-                              flex items-center justify-center mb-6 shadow-xl shadow-[#FF6B6B]/25">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white">
-                  <path d="M12 3L20 11L12 19L4 11L12 3Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="11" r="2.5" fill="currentColor"/>
+              <div className="w-16 h-16 rounded-2xl bg-[#092D37] border border-teal-500/30
+                              flex items-center justify-center mb-6 shadow-xl p-2.5">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
+                  <defs>
+                    <linearGradient id="glowGradLarge" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FF6B6B" />
+                      <stop offset="50%" stopColor="#FFA69E" />
+                      <stop offset="100%" stopColor="#FF8E53" />
+                    </linearGradient>
+                    <linearGradient id="glassGradLarge" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#FF6B6B" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#1B5E73" stopOpacity="0.2" />
+                    </linearGradient>
+                    <filter id="neonGlowLarge" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+                  <path d="M50 5 L90 28 L90 72 L50 95 L10 72 L10 28 Z" stroke="url(#glowGradLarge)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
+                  <path d="M25 25 L45 50 L25 75" stroke="url(#glowGradLarge)" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M75 25 L55 50 L75 75" stroke="url(#glowGradLarge)" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M50 20 L68 50 L50 80 L32 50 Z" fill="url(#glassGradLarge)" stroke="url(#glowGradLarge)" strokeWidth="2" strokeLinejoin="round" />
+                  <circle cx="50" cy="50" r="4.5" fill="#FFFFFF" filter="url(#neonGlowLarge)" />
+                  <path d="M50 38 L50 62 M38 50 L62 50" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" filter="url(#neonGlowLarge)" />
                 </svg>
               </div>
               <h2 className="text-2xl font-extrabold text-slate-800 mb-2">What campaign would you like to create?</h2>
