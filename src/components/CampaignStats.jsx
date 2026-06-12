@@ -69,7 +69,7 @@ export default function CampaignStats({ stats, audienceSize, status }) {
       pct: pctConverted,
       total: clicked,
       color: 'from-[#FF6B6B] to-[#FFA69E]',
-      bg: 'bg-coral-500/10',
+      bg: 'bg-accent-200/20',
       text: 'text-[#FF6B6B]',
       icon: <span className="text-sm">🛒</span>,
     },

@@ -225,6 +225,7 @@ export default function Dashboard() {
                     whatsapp: 'from-green-500 to-green-400',
                     sms: 'from-blue-500 to-blue-400',
                     email: 'from-[#0F4C5C] to-[#FF6B6B]',
+                    rcs: 'from-orange-500 to-orange-400',
                   };
                   return (
                     <div key={item.channel}>

@@ -25,6 +25,7 @@ export default function Customers() {
   const [expandedId, setExpandedId] = useState(null);
   const [expandedData, setExpandedData] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddOrderModal, setShowAddOrderModal] = useState(null);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -140,7 +141,7 @@ export default function Customers() {
       { name: 'Ananya Gupta', email: `ananya.g${Math.floor(Math.random()*900)+100}@gmail.com`, phone: '+919820011225', city: 'Mumbai', channel: 'whatsapp', tags: ['vip', 'loyal'] },
       { name: 'Rahul Singh', email: `rahul.s${Math.floor(Math.random()*900)+100}@gmail.com`, phone: '+919830011226', city: 'Kolkata', channel: 'sms', tags: ['frequent-buyer'] },
       { name: 'Priya Reddy', email: `priya.r${Math.floor(Math.random()*900)+100}@gmail.com`, phone: '+919840011227', city: 'Hyderabad', channel: 'whatsapp', tags: ['deal-seeker'] },
-      { name: 'Arjun Verma', email: `arjun.v${Math.floor(Math.random()*900)+100}@gmail.com`, phone: '+919850011228', city: 'Pune', channel: 'email', tags: ['seasonal'] }
+      { name: 'Arjun Verma', email: `arjun.v${Math.floor(Math.random()*900)+100}@gmail.com`, phone: '+919850011228', city: 'Pune', channel: 'rcs', tags: ['seasonal'] }
     ];
     try {
       const res = await axios.post(`${API_URL}/api/customers`, { customers: demoCustomers });
@@ -260,6 +261,7 @@ export default function Customers() {
                 <option value="whatsapp">WhatsApp</option>
                 <option value="sms">SMS</option>
                 <option value="email">Email</option>
+                <option value="rcs">RCS</option>
               </select>
               <IoChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             </div>
@@ -305,10 +307,11 @@ export default function Customers() {
                           </td>
                           <td className="px-5 py-3 text-slate-600 font-medium">{customer.city}</td>
                           <td className="px-5 py-3">
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium
-                              ${customer.channel === 'whatsapp' ? 'bg-green-500/15 text-green-400 font-bold' :
-                                customer.channel === 'sms' ? 'bg-blue-500/15 text-blue-400 font-bold' :
-                                'bg-brand-500/15 text-brand-400 font-bold'}`}>
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold capitalize
+                              ${customer.channel === 'whatsapp' ? 'bg-green-500/15 text-green-500' :
+                                customer.channel === 'sms' ? 'bg-blue-500/15 text-blue-500' :
+                                customer.channel === 'email' ? 'bg-brand-500/15 text-brand-500' :
+                                'bg-orange-500/15 text-orange-600'}`}>
                               {customer.channel}
                             </span>
                           </td>
@@ -363,9 +366,20 @@ export default function Customers() {
                                 {/* Order History */}
                                 {expandedData?.orders ? (
                                   <div>
-                                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-2">
-                                      Order History ({expandedData.orders.length})
-                                    </p>
+                                    <div className="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                                      <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">
+                                        Order History ({expandedData.orders.length})
+                                      </p>
+                                      <button
+                                        onClick={() => setShowAddOrderModal({ id: customer._id, name: customer.name })}
+                                        className="flex items-center gap-1 h-8 px-3 rounded-lg text-xs font-bold
+                                                   border border-slate-200 hover:border-[#FF6B6B]/40 text-slate-600 hover:text-[#0F4C5C]
+                                                   bg-white transition-all shadow-sm active:scale-95 cursor-pointer"
+                                      >
+                                        <IoAdd className="w-3.5 h-3.5 text-[#FF6B6B]" />
+                                        Record Order
+                                      </button>
+                                    </div>
                                     <div className="space-y-2">
                                       {expandedData.orders.map((order) => (
                                         <div key={order._id} className="flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-slate-100">
@@ -466,6 +480,20 @@ export default function Customers() {
           }}
         />
       )}
+
+      {/* Add Order Modal */}
+      {showAddOrderModal && (
+        <AddOrderModal
+          customer={showAddOrderModal}
+          onClose={() => setShowAddOrderModal(null)}
+          onSuccess={() => {
+            setShowAddOrderModal(null);
+            fetchCustomers();
+            fetchCustomerDetail(expandedId);
+            showToast('Order recorded and campaign attributed successfully! 💰', 'success');
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -554,6 +582,7 @@ function AddCustomerModal({ onClose, onSuccess }) {
                   <option value="whatsapp">WhatsApp</option>
                   <option value="sms">SMS</option>
                   <option value="email">Email</option>
+                  <option value="rcs">RCS</option>
                 </select>
                 <IoChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
@@ -575,3 +604,137 @@ function AddCustomerModal({ onClose, onSuccess }) {
     </div>
   );
 }
+
+/** Modal for recording a manual customer order with campaign attribution */
+function AddOrderModal({ customer, onClose, onSuccess }) {
+  const [form, setForm] = useState({
+    amount: '',
+    itemName: '',
+    campaignId: '',
+  });
+  const [campaigns, setCampaigns] = useState([]);
+  const [campaignsLoading, setCampaignsLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchCampaigns();
+  }, []);
+
+  const fetchCampaigns = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/campaigns`);
+      setCampaigns(res.data.campaigns || []);
+    } catch (error) {
+      console.error('Failed to fetch campaigns for attribution:', error);
+    } finally {
+      setCampaignsLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const amountVal = parseFloat(form.amount);
+    if (isNaN(amountVal) || amountVal <= 0) return;
+
+    setSubmitting(true);
+    try {
+      await axios.post(`${API_URL}/api/customers/${customer.id}/orders`, {
+        amount: amountVal,
+        items: [{ name: form.itemName || 'Manual Item', price: amountVal }],
+        campaignId: form.campaignId || null,
+        status: 'completed'
+      });
+      onSuccess();
+    } catch (error) {
+      console.error('Failed to create manual order:', error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-modal-backdrop"
+         onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div
+        className="relative premium-card rounded-2xl p-6 w-full max-w-md animate-modal-content border border-slate-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h3 className="text-lg font-bold text-slate-800">Record Order</h3>
+            <p className="text-xs text-slate-500 font-medium font-semibold">For {customer.name}</p>
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+            <IoClose className="w-5 h-5" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-xs text-slate-500 font-semibold mb-1.5 block">Order Amount (₹)</label>
+            <input
+              type="number"
+              value={form.amount}
+              onChange={(e) => setForm({ ...form, amount: e.target.value })}
+              placeholder="e.g. 1500"
+              required
+              min="1"
+              className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200
+                         text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#FF6B6B]/40"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-slate-500 font-semibold mb-1.5 block">Item Name</label>
+            <input
+              type="text"
+              value={form.itemName}
+              onChange={(e) => setForm({ ...form, itemName: e.target.value })}
+              placeholder="e.g. Cotton Kurta"
+              required
+              className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200
+                         text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#FF6B6B]/40"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-slate-500 font-semibold mb-1.5 block">Attribute to Campaign</label>
+            <div className="relative">
+              <select
+                value={form.campaignId}
+                onChange={(e) => setForm({ ...form, campaignId: e.target.value })}
+                disabled={campaignsLoading}
+                className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-white border border-slate-200
+                           text-sm text-slate-700 focus:outline-none focus:border-[#FF6B6B]/40 appearance-none cursor-pointer disabled:opacity-50"
+              >
+                <option value="">None (Organic Conversion)</option>
+                {campaigns.map((c) => (
+                  <option key={c._id} value={c._id}>
+                    {c.name} ({c.channel.toUpperCase()})
+                  </option>
+                ))}
+              </select>
+              <IoChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            </div>
+            <p className="text-[10px] text-slate-400 mt-1.5 font-medium leading-relaxed">
+              Attributing will automatically add this order value to the campaign's revenue and increase its conversion rate.
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-3 rounded-xl text-sm font-bold mt-2
+                       bg-gradient-to-r from-[#0F4C5C] to-[#FF6B6B] text-white shadow-sm
+                       hover:shadow-[0_4px_12px_rgba(255,107,107,0.25)] hover:scale-[1.01] active:scale-[0.99] transition-all
+                       disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {submitting ? 'Recording...' : 'Record Order'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+

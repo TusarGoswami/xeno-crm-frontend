@@ -46,9 +46,10 @@ export default function Campaigns() {
   };
 
   const channelConfig = {
-    whatsapp: { label: 'WhatsApp', color: 'bg-green-500/15 text-green-400' },
-    sms: { label: 'SMS', color: 'bg-blue-500/15 text-blue-400' },
-    email: { label: 'Email', color: 'bg-brand-500/15 text-brand-400' },
+    whatsapp: { label: 'WhatsApp', color: 'bg-green-500/15 text-green-500 font-bold' },
+    sms: { label: 'SMS', color: 'bg-blue-500/15 text-blue-500 font-bold' },
+    email: { label: 'Email', color: 'bg-brand-500/15 text-brand-500 font-bold' },
+    rcs: { label: 'RCS', color: 'bg-orange-500/15 text-orange-600 font-bold' },
   };
 
   // Compute aggregate stats
