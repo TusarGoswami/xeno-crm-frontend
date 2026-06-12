@@ -30,13 +30,13 @@ export default function ChatInput({ onSubmit, isLoading }) {
 
   return (
     <form onSubmit={handleSubmit} className="relative" id="chat-input-form">
-      {/* Glassmorphism container */}
-      <div className="glass rounded-2xl p-1.5 shadow-lg shadow-brand-500/5 border border-white/10 
-                      transition-all duration-300 focus-within:shadow-brand-500/20 focus-within:border-brand-400/30">
+      {/* Light card container */}
+      <div className="bg-white rounded-2xl p-1.5 shadow-md shadow-slate-100 border border-slate-200 
+                      transition-all duration-300 focus-within:shadow-md focus-within:shadow-slate-200/50 focus-within:border-brand-300">
         <div className="flex items-end gap-2">
           {/* AI sparkle icon */}
           <div className="flex-shrink-0 p-3 pb-3.5">
-            <IoSparkles className="w-5 h-5 text-brand-400 animate-pulse-slow" />
+            <IoSparkles className="w-5 h-5 text-[#FF6B6B] animate-pulse-slow" />
           </div>
 
           {/* Textarea input */}
@@ -48,7 +48,7 @@ export default function ChatInput({ onSubmit, isLoading }) {
             placeholder="Describe your campaign in plain English..."
             disabled={isLoading}
             rows={1}
-            className="flex-1 bg-transparent text-white placeholder-gray-500 text-sm 
+            className="flex-1 bg-transparent text-slate-800 placeholder-slate-400 text-sm 
                        resize-none py-3 pr-2 focus:outline-none disabled:opacity-50
                        min-h-[44px] max-h-[120px] leading-relaxed"
             style={{ overflow: 'auto' }}
@@ -60,9 +60,9 @@ export default function ChatInput({ onSubmit, isLoading }) {
             id="send-prompt-btn"
             disabled={!prompt.trim() || isLoading}
             className="flex-shrink-0 p-3 m-0.5 rounded-xl 
-                       bg-gradient-to-r from-brand-500 to-brand-600 
+                       bg-gradient-to-r from-brand-500 to-[#FF6B6B] 
                        text-white transition-all duration-200
-                       hover:from-brand-400 hover:to-brand-500 hover:shadow-lg hover:shadow-brand-500/25
+                       hover:from-brand-600 hover:to-[#E04E4E] hover:shadow-lg hover:shadow-[#FF6B6B]/25
                        disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none
                        active:scale-95"
           >
@@ -76,7 +76,7 @@ export default function ChatInput({ onSubmit, isLoading }) {
       </div>
 
       {/* Helper text */}
-      <p className="text-xs text-gray-600 mt-2 ml-2">
+      <p className="text-xs text-slate-400 mt-2 ml-2">
         Try: "Find customers in Mumbai who spent over ₹5000 and send them a Diwali offer on WhatsApp"
       </p>
     </form>

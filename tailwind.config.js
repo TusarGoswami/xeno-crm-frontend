@@ -8,26 +8,53 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+          50: '#F0F7F9',
+          100: '#D1E6EC',
+          200: '#A3CDDA',
+          300: '#6BA8BD',
+          400: '#1B5E73', // Secondary Teal
+          500: '#0F4C5C', // Teal
+          600: '#0C3E4B',
+          700: '#092E38',
+          800: '#061F26',
+          900: '#031013',
+          950: '#010506',
         },
         surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          700: '#1e293b',
-          800: '#0f172a',
-          900: '#020617',
+          50: '#F7FAFC', // Background
+          100: '#EDF2F7',
+          200: '#E2E8F0',
+          300: '#CBD5E0',
+          400: '#A0AEC0',
+          500: '#718096',
+          600: '#4A5568',
+          700: '#2D3748',
+          800: '#1A202C',
+          900: '#171923',
         },
+        accent: {
+          50: '#FFF5F5',
+          100: '#FFE3E3',
+          200: '#FFA69E', // Light Coral
+          300: '#FF8C8C',
+          400: '#FF6B6B', // Coral
+          500: '#E04E4E',
+          600: '#C23636',
+          700: '#9C2222',
+        },
+        // Fallback purple mapping to accent (Coral) to preserve other component gradients
+        purple: {
+          50: '#FFF5F5',
+          100: '#FFE3E3',
+          200: '#FFA69E',
+          300: '#FF8C8C',
+          400: '#FF6B6B',
+          500: '#FF6B6B',
+          600: '#E04E4E',
+          700: '#C23636',
+          800: '#9C2222',
+          900: '#7B1B1B',
+        }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

@@ -98,7 +98,7 @@ export default function SegmentPreview({ filters, customers, count, reasoning })
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium
                         ${customer.channel === 'whatsapp' ? 'bg-green-500/15 text-green-400' :
                           customer.channel === 'sms' ? 'bg-blue-500/15 text-blue-400' :
-                          'bg-purple-500/15 text-purple-400'}`}
+                          'bg-brand-500/15 text-brand-400'}`}
                       >
                         {customer.channel}
                       </span>

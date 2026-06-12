@@ -18,7 +18,7 @@ export default function MessageDraftEditor({ message, onChange, channel }) {
   const channelConfig = {
     whatsapp: { label: 'WhatsApp', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
     sms: { label: 'SMS', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
-    email: { label: 'Email', color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+    email: { label: 'Email', color: 'text-brand-400', bg: 'bg-brand-500/10', border: 'border-brand-500/20' },
   };
 
   const config = channelConfig[channel] || channelConfig.whatsapp;

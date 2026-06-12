@@ -57,9 +57,9 @@ export default function CampaignStats({ stats, audienceSize, status }) {
       count: clicked,
       pct: pctClicked,
       total: opened,
-      color: 'from-purple-500 to-purple-400',
-      bg: 'bg-purple-500/10',
-      text: 'text-purple-400',
+      color: 'from-brand-600 to-brand-400',
+      bg: 'bg-brand-500/10',
+      text: 'text-brand-400',
       icon: <IoHandRight className="w-4 h-4" />,
     },
   ];
