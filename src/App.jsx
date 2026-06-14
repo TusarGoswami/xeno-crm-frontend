@@ -23,7 +23,7 @@ export default function App() {
       <ToastProvider>
         <div className="flex min-h-screen ambient-bg">
           <Sidebar />
-          <main className="flex-1 min-w-0">
+          <main className="flex-1 min-w-0 mobile-top-padding">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/copilot" element={<Copilot />} />

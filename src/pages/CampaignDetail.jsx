@@ -79,7 +79,7 @@ export default function CampaignDetail() {
 
   if (loading) {
     return (
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-8 space-y-6">
         <SkeletonCard />
         <SkeletonCard />
       </div>
@@ -110,9 +110,9 @@ export default function CampaignDetail() {
   ];
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
         <button
           onClick={() => navigate('/campaigns')}
           className="p-2 rounded-xl bg-white/5 hover:bg-white/10 
@@ -122,13 +122,13 @@ export default function CampaignDetail() {
           <IoArrowBack className="w-5 h-5" />
         </button>
         <div className="flex-1">
-          <div className="flex items-center gap-3">
-            <h1 className="text-xl font-extrabold text-slate-800">{campaign.name}</h1>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <h1 className="text-lg sm:text-xl font-extrabold text-slate-800">{campaign.name}</h1>
             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${chConfig.color}`}>
               {chConfig.label}
             </span>
           </div>
-          <div className="flex items-center gap-4 text-xs text-slate-500 mt-1">
+          <div className="flex items-center gap-3 sm:gap-4 text-xs text-slate-500 mt-1 flex-wrap">
             <span className="flex items-center gap-1 font-medium">
               <IoCalendar className="w-3 h-3" />
               {new Date(campaign.createdAt).toLocaleDateString('en-IN', {
@@ -155,9 +155,9 @@ export default function CampaignDetail() {
       )}
 
       {/* Visual Funnel */}
-      <div className="premium-card rounded-2xl p-6 mb-6">
-        <h3 className="text-sm font-bold text-slate-800 mb-5">Delivery Funnel</h3>
-        <div className="flex items-end justify-between gap-4">
+      <div className="premium-card rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+        <h3 className="text-sm font-bold text-slate-800 mb-4 sm:mb-5">Delivery Funnel</h3>
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-4 items-end">
           {funnelSteps.map((step, i) => {
             const Icon = step.icon;
             const maxCount = funnelSteps[0].count || 1;
@@ -166,11 +166,11 @@ export default function CampaignDetail() {
             return (
               <div key={step.label} className="flex-1 flex flex-col items-center">
                 {/* Count */}
-                <span className="text-2xl font-extrabold text-slate-800 mb-2">{step.count}</span>
+                <span className="text-lg sm:text-2xl font-extrabold text-slate-800 mb-2">{step.count}</span>
 
                 {/* Bar */}
-                <div className="w-full max-w-[80px] bg-slate-100 rounded-xl overflow-hidden"
-                     style={{ height: '140px' }}>
+                <div className="w-full max-w-[80px] mx-auto bg-slate-100 rounded-xl overflow-hidden"
+                     style={{ height: '100px' }}>
                   <div className="w-full flex items-end h-full">
                     <div
                       className={`w-full rounded-xl bg-gradient-to-t ${step.color} animate-funnel`}
@@ -206,7 +206,7 @@ export default function CampaignDetail() {
       </div>
 
       {/* Detailed Stats */}
-      <div className="premium-card rounded-2xl p-6 mb-6">
+      <div className="premium-card rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
         <CampaignStats
           stats={campaign.stats}
           audienceSize={campaign.audienceSize}
@@ -216,7 +216,7 @@ export default function CampaignDetail() {
 
       {/* Message Delivery Log */}
       {messages.length > 0 && (
-        <div className="premium-card rounded-2xl p-6">
+        <div className="premium-card rounded-2xl p-4 sm:p-6">
           <h3 className="text-sm font-bold text-slate-800 mb-4">
             Message Delivery Log ({messages.length})
           </h3>

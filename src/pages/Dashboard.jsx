@@ -69,7 +69,7 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-8 space-y-6">
         <div className="h-8 w-48 bg-surface-700/50 rounded-lg animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-surface-700/50 via-surface-700/80 to-surface-700/50" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)}
@@ -118,16 +118,16 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-800">Dashboard</h1>
-          <p className="text-sm text-slate-500 mt-1">Overview of your CRM performance</p>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-800">Dashboard</h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">Overview of your CRM performance</p>
         </div>
         <button
           onClick={() => navigate('/copilot')}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+          className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm font-medium
                      bg-gradient-to-r from-[#0F4C5C] to-[#FF6B6B] text-white
                      hover:shadow-[0_4px_15px_rgba(255,107,107,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
           id="quick-new-campaign"
@@ -137,7 +137,7 @@ export default function Dashboard() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {metricCards.map((card) => {
           const Icon = card.icon;
           return (
@@ -151,13 +151,13 @@ export default function Dashboard() {
                   <Icon className={`w-4.5 h-4.5 ${card.iconColor}`} />
                 </div>
               </div>
-              <p className="text-2xl font-extrabold text-slate-800">{card.value}</p>
+              <p className="text-lg sm:text-2xl font-extrabold text-slate-800 truncate">{card.value}</p>
             </div>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Performance Rates */}
         <div className="premium-card rounded-2xl p-6 lg:col-span-1">
           <h3 className="text-sm font-bold text-slate-800 mb-5 flex items-center gap-2">

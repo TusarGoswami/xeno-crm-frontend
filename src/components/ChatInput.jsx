@@ -76,7 +76,7 @@ export default function ChatInput({ onSubmit, isLoading }) {
       </div>
 
       {/* Helper text */}
-      <p className="text-xs text-slate-400 mt-2 ml-2">
+      <p className="hidden sm:block text-xs text-slate-400 mt-2 ml-2">
         Try: "Find customers in Mumbai who spent over ₹5000 and send them a Diwali offer on WhatsApp"
       </p>
     </form>

@@ -203,8 +203,8 @@ export default function Copilot() {
       case MSG_TYPES.USER:
         return (
           <div key={msg.id} className="flex justify-end animate-fade-in">
-            <div className="max-w-[80%] bg-gradient-to-r from-brand-500 to-[#FF6B6B] 
-                            rounded-2xl rounded-br-md px-5 py-3 shadow-md shadow-brand-500/10">
+            <div className="max-w-[90%] sm:max-w-[80%] bg-gradient-to-r from-brand-500 to-[#FF6B6B] 
+                            rounded-2xl rounded-br-md px-4 sm:px-5 py-3 shadow-md shadow-brand-500/10">
               <p className="text-sm text-white leading-relaxed">{msg.text}</p>
             </div>
           </div>
@@ -213,7 +213,7 @@ export default function Copilot() {
       case MSG_TYPES.AI_THINKING:
         return (
           <div key={msg.id} className="flex justify-start animate-fade-in">
-            <div className="premium-card rounded-2xl rounded-bl-md px-5 py-3 max-w-[80%]">
+            <div className="premium-card rounded-2xl rounded-bl-md px-4 sm:px-5 py-3 max-w-[90%] sm:max-w-[80%]">
               <div className="flex items-center gap-3">
                 <div className="flex gap-1">
                   <span className="typing-dot w-2 h-2 rounded-full bg-[#FF6B6B]" />
@@ -229,7 +229,7 @@ export default function Copilot() {
       case MSG_TYPES.AI_FILTERS:
         return (
           <div key={msg.id} className="flex justify-start animate-slide-up">
-            <div className="premium-card rounded-2xl rounded-bl-md p-5 max-w-[90%] w-full">
+            <div className="premium-card rounded-2xl rounded-bl-md p-4 sm:p-5 max-w-[95%] sm:max-w-[90%] w-full">
               <div className="flex items-center gap-2 mb-3">
                 <IoSparkles className="w-4 h-4 text-[#FF6B6B]" />
                 <h3 className="text-sm font-bold text-slate-800">AI Analysis</h3>
@@ -250,7 +250,7 @@ export default function Copilot() {
       case MSG_TYPES.SEGMENT_PREVIEW:
         return (
           <div key={msg.id} className="flex justify-start w-full">
-            <div className="premium-card rounded-2xl rounded-bl-md p-5 max-w-[95%] w-full">
+            <div className="premium-card rounded-2xl rounded-bl-md p-4 sm:p-5 max-w-full sm:max-w-[95%] w-full">
               <SegmentPreview
                 filters={msg.filters}
                 customers={msg.customers}
@@ -264,7 +264,7 @@ export default function Copilot() {
       case MSG_TYPES.MESSAGE_DRAFT:
         return (
           <div key={msg.id} className="flex justify-start w-full">
-            <div className="premium-card rounded-2xl rounded-bl-md p-5 max-w-[90%] w-full">
+            <div className="premium-card rounded-2xl rounded-bl-md p-4 sm:p-5 max-w-full sm:max-w-[90%] w-full">
               <MessageDraftEditor
                 message={currentDraft || msg.message}
                 onChange={setCurrentDraft}
@@ -281,9 +281,9 @@ export default function Copilot() {
               onClick={handleLaunch}
               disabled={isLoading}
               id="launch-campaign-btn"
-              className="group flex items-center gap-3 px-8 py-4 rounded-2xl
+              className="group flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 rounded-2xl
                          bg-gradient-to-r from-[#0F4C5C] via-[#1B5E73] to-[#FF6B6B]
-                         text-white font-bold text-base
+                         text-white font-bold text-sm sm:text-base
                          shadow-md shadow-brand-500/10
                          hover:shadow-[0_6px_20px_rgba(255,107,107,0.35)]
                          hover:scale-[1.02] active:scale-[0.98]
@@ -300,7 +300,7 @@ export default function Copilot() {
       case MSG_TYPES.SUCCESS:
         return (
           <div key={msg.id} className="flex justify-start animate-slide-up">
-            <div className="premium-card rounded-2xl rounded-bl-md p-5 max-w-[90%] w-full 
+            <div className="premium-card rounded-2xl rounded-bl-md p-4 sm:p-5 max-w-full sm:max-w-[90%] w-full 
                             border-emerald-500/20">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center">
@@ -351,10 +351,10 @@ export default function Copilot() {
     <div className="flex flex-col h-screen">
       {/* Chat Messages Area */}
       <main className="flex-1 overflow-y-auto custom-scrollbar">
-        <div className="max-w-4xl mx-auto px-6 py-6 space-y-4">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4">
           {/* Welcome message when chat is empty */}
           {messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-fade-in">
+            <div className="flex flex-col items-center justify-center h-[55vh] sm:h-[60vh] text-center animate-fade-in px-2">
               <div className="w-16 h-16 rounded-2xl bg-[#092D37] border border-teal-500/30
                               flex items-center justify-center mb-6 shadow-xl p-2.5">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
@@ -381,8 +381,8 @@ export default function Copilot() {
                   <path d="M50 38 L50 62 M38 50 L62 50" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" filter="url(#neonGlowLarge)" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-extrabold text-slate-800 mb-2">What campaign would you like to create?</h2>
-              <p className="text-slate-500 max-w-md text-sm leading-relaxed font-medium">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2">What campaign would you like to create?</h2>
+              <p className="text-slate-500 max-w-md text-xs sm:text-sm leading-relaxed font-medium">
                 Describe your target audience and message in plain English. 
                 I'll handle the segmentation, draft a message, and get it ready to send.
               </p>
@@ -418,7 +418,7 @@ export default function Copilot() {
 
       {/* Chat Input (pinned to bottom) */}
       <footer className="flex-shrink-0 border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-6 py-4">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
           <ChatInput onSubmit={handlePromptSubmit} isLoading={isLoading} />
         </div>
       </footer>

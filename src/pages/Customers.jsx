@@ -167,12 +167,12 @@ export default function Customers() {
   const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Hyderabad', 'Pune', 'Kolkata', 'Jaipur'];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-100 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 border-b border-slate-100 pb-4 sm:pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-800">Customers</h1>
-          <p className="text-sm text-slate-500 mt-1">{customers.length} customers found</p>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-800">Customers</h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">{customers.length} customers found</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button
@@ -211,13 +211,13 @@ export default function Customers() {
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
         {/* Left Column (Table + Filters) */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-3 space-y-4 sm:space-y-6">
           {/* Filters */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {/* Search */}
-            <div className="relative flex-1 min-w-[220px]">
+            <div className="relative flex-1 min-w-[180px] sm:min-w-[220px]">
               <IoSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
@@ -232,7 +232,7 @@ export default function Customers() {
             </div>
 
             {/* City filter */}
-            <div className="relative min-w-[140px]">
+            <div className="relative min-w-[120px] sm:min-w-[140px]">
               <select
                 value={cityFilter}
                 onChange={(e) => setCityFilter(e.target.value)}
@@ -248,7 +248,7 @@ export default function Customers() {
             </div>
 
             {/* Channel filter */}
-            <div className="relative min-w-[140px]">
+            <div className="relative min-w-[120px] sm:min-w-[140px]">
               <select
                 value={channelFilter}
                 onChange={(e) => setChannelFilter(e.target.value)}

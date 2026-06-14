@@ -1,11 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { IoSparkles, IoGrid, IoChatbubbles, IoMegaphone, IoPeople, IoChevronBack, IoChevronForward } from 'react-icons/io5';
-import { useState } from 'react';
+import { IoSparkles, IoGrid, IoChatbubbles, IoMegaphone, IoPeople, IoChevronBack, IoChevronForward, IoMenu, IoClose } from 'react-icons/io5';
+import { useState, useEffect } from 'react';
 
 /**
  * Sidebar Component
- * Persistent navigation sidebar with collapsible toggle.
- * Active route highlighting, brand logo, and responsive design.
+ * Persistent navigation sidebar with collapsible toggle on desktop.
+ * On mobile (<768px), becomes a hamburger menu with slide-out drawer overlay.
  */
 
 const navItems = [
@@ -17,18 +17,29 @@ const navItems = [
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
-  return (
-    <aside
-      className={`flex-shrink-0 h-screen sticky top-0 flex flex-col
-                  bg-[#0F4C5C] border-r border-[#0A3D4A] text-white
-                  transition-all duration-300 ease-in-out
-                  ${collapsed ? 'w-[72px]' : 'w-[240px]'}`}
-    >
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  const sidebarContent = (isMobile = false) => (
+    <>
       {/* Brand Logo */}
       <div className={`flex items-center gap-3 px-5 py-5 border-b border-[#0A3D4A] min-h-[72px]
-                        ${collapsed ? 'justify-center px-0' : ''}`}>
+                        ${!isMobile && collapsed ? 'justify-center px-0' : ''}`}>
         <div className="w-10 h-10 rounded-xl bg-[#092D37] border border-teal-500/30
                         flex items-center justify-center shadow-lg flex-shrink-0 p-1.5">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
@@ -55,11 +66,21 @@ export default function Sidebar() {
             <path d="M50 38 L50 62 M38 50 L62 50" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" filter="url(#neonGlow)" />
           </svg>
         </div>
-        {!collapsed && (
+        {(isMobile || !collapsed) && (
           <div className="overflow-hidden">
             <h1 className="text-sm font-extrabold text-white leading-tight tracking-wider uppercase whitespace-nowrap">Xenith AI</h1>
             <p className="text-[10px] text-teal-200/70 font-medium whitespace-nowrap">Xeno Campaign Engine</p>
           </div>
+        )}
+        {/* Close button for mobile */}
+        {isMobile && (
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="ml-auto p-1.5 rounded-lg text-teal-200 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Close menu"
+          >
+            <IoClose className="w-5 h-5" />
+          </button>
         )}
       </div>
 
@@ -79,11 +100,11 @@ export default function Sidebar() {
                           ${isActive
                             ? 'bg-white/10 text-white border border-white/10 shadow-sm'
                             : 'text-teal-100 hover:text-white hover:bg-white/5 border border-transparent'}
-                          ${collapsed ? 'justify-center px-0 mx-auto w-11' : ''}`}
+                          ${!isMobile && collapsed ? 'justify-center px-0 mx-auto w-11' : ''}`}
             >
               <Icon className={`w-5 h-5 flex-shrink-0 transition-colors
                                ${isActive ? 'text-white' : 'text-teal-200 group-hover:text-teal-100'}`} />
-              {!collapsed && <span className="whitespace-nowrap">{item.label}</span>}
+              {(isMobile || !collapsed) && <span className="whitespace-nowrap">{item.label}</span>}
 
               {/* Active indicator bar - Coral color */}
               {isActive && (
@@ -91,8 +112,8 @@ export default function Sidebar() {
                                 bg-[#FF6B6B]" />
               )}
 
-              {/* Tooltip on collapsed */}
-              {collapsed && (
+              {/* Tooltip on collapsed (desktop only) */}
+              {!isMobile && collapsed && (
                 <div className="absolute left-full ml-2 px-2.5 py-1 rounded-lg bg-[#1B5E73] text-white
                                 text-xs font-medium whitespace-nowrap opacity-0 pointer-events-none
                                 group-hover:opacity-100 transition-opacity z-50 shadow-lg">
@@ -104,26 +125,73 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Collapse Toggle */}
-      <div className="px-3 py-4 border-t border-[#0A3D4A]">
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs
-                      text-teal-200 hover:text-teal-100 hover:bg-white/5
-                      transition-all duration-200 w-full
-                      ${collapsed ? 'justify-center' : ''}`}
-          id="toggle-sidebar-btn"
+      {/* Collapse Toggle (desktop only) */}
+      {!isMobile && (
+        <div className="px-3 py-4 border-t border-[#0A3D4A]">
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs
+                        text-teal-200 hover:text-teal-100 hover:bg-white/5
+                        transition-all duration-200 w-full
+                        ${collapsed ? 'justify-center' : ''}`}
+            id="toggle-sidebar-btn"
+          >
+            {collapsed ? (
+              <IoChevronForward className="w-4 h-4" />
+            ) : (
+              <>
+                <IoChevronBack className="w-4 h-4" />
+                <span>Collapse</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile Hamburger Button — fixed top-left */}
+      <button
+        onClick={() => setMobileOpen(true)}
+        className="md:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[#0F4C5C] text-white
+                   shadow-lg shadow-[#0F4C5C]/30 hover:bg-[#1B5E73] transition-colors"
+        id="mobile-menu-btn"
+        aria-label="Open menu"
+      >
+        <IoMenu className="w-5 h-5" />
+      </button>
+
+      {/* Mobile Drawer Overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-50 flex"
+          onClick={() => setMobileOpen(false)}
         >
-          {collapsed ? (
-            <IoChevronForward className="w-4 h-4" />
-          ) : (
-            <>
-              <IoChevronBack className="w-4 h-4" />
-              <span>Collapse</span>
-            </>
-          )}
-        </button>
-      </div>
-    </aside>
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50 animate-modal-backdrop" />
+
+          {/* Drawer */}
+          <aside
+            className="relative z-10 w-[260px] h-full flex flex-col bg-[#0F4C5C] border-r border-[#0A3D4A]
+                        text-white shadow-2xl animate-slide-in-left"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {sidebarContent(true)}
+          </aside>
+        </div>
+      )}
+
+      {/* Desktop Sidebar */}
+      <aside
+        className={`hidden md:flex flex-shrink-0 h-screen sticky top-0 flex-col
+                    bg-[#0F4C5C] border-r border-[#0A3D4A] text-white
+                    transition-all duration-300 ease-in-out
+                    ${collapsed ? 'w-[72px]' : 'w-[240px]'}`}
+      >
+        {sidebarContent(false)}
+      </aside>
+    </>
   );
 }

@@ -66,17 +66,17 @@ export default function Campaigns() {
     ? ((aggStats.totalOpened / aggStats.totalDelivered) * 100).toFixed(1) : '0.0';
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-800">Campaigns</h1>
-          <p className="text-sm text-slate-500 mt-1">{campaigns.length} total campaigns</p>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-800">Campaigns</h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">{campaigns.length} total campaigns</p>
         </div>
         <button
           onClick={() => navigate('/copilot')}
           id="new-campaign-btn"
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+          className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm font-medium
                      bg-gradient-to-r from-[#0F4C5C] to-[#FF6B6B] text-white
                      hover:shadow-[0_4px_15px_rgba(255,107,107,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
         >
@@ -87,7 +87,7 @@ export default function Campaigns() {
 
       {/* Summary Metrics */}
       {campaigns.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6 sm:mb-8">
           {[
             { label: 'Total Campaigns', value: campaigns.length, color: 'text-brand-500' },
             { label: 'Messages Sent', value: aggStats.totalSent, color: 'text-slate-800' },
@@ -133,7 +133,7 @@ export default function Campaigns() {
               <button
                 key={campaign._id}
                 onClick={() => navigate(`/campaigns/${campaign._id}`)}
-                className="w-full premium-card rounded-2xl px-6 py-5 flex items-center gap-4 text-left group"
+                className="w-full premium-card rounded-2xl px-4 sm:px-6 py-4 sm:py-5 flex items-center gap-3 sm:gap-4 text-left group"
                 id={`campaign-card-${campaign._id}`}
               >
                 {/* Campaign icon */}
@@ -145,7 +145,7 @@ export default function Campaigns() {
                 {/* Campaign info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-sm font-bold text-slate-800 truncate">{campaign.name}</h3>
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-800 truncate">{campaign.name}</h3>
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${chConfig.color}`}>
                       {chConfig.label}
                     </span>
@@ -157,7 +157,7 @@ export default function Campaigns() {
                       {campaign.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                  <div className="flex items-center gap-2 sm:gap-3 text-xs text-gray-500 flex-wrap">
                     <span className="flex items-center gap-1">
                       <IoCalendar className="w-3 h-3" />
                       {formatDate(campaign.createdAt)}
