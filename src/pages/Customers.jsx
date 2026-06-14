@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   IoPeople, IoSearch, IoAdd, IoClose,
@@ -292,9 +292,8 @@ export default function Customers() {
                     </tr>
                   ) : (
                     customers.map((customer) => (
-                      <>
+                      <React.Fragment key={customer._id}>
                         <tr
-                          key={customer._id}
                           onClick={() => toggleExpand(customer._id)}
                           className={`hover:bg-slate-50 transition-colors cursor-pointer border-b border-slate-100/50
                                       ${expandedId === customer._id ? 'bg-brand-500/5' : ''}`}
@@ -413,7 +412,7 @@ export default function Customers() {
                             </td>
                           </tr>
                         )}
-                      </>
+                      </React.Fragment>
                     ))
                   )}
                 </tbody>

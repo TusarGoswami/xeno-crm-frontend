@@ -19,7 +19,7 @@ import Customers from './pages/Customers';
  */
 export default function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ToastProvider>
         <div className="flex min-h-screen ambient-bg">
           <Sidebar />
